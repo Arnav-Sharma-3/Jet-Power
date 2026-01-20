@@ -223,7 +223,7 @@ with tab_single:
 # BATCH MODE
 # ============================================================
 with tab_batch:
-    st.subheader("Batch Mode")
+    st.subheader("Batch Geometry Mode")
     batch_geometry_mode = st.radio(
         "Geometry handling:",
         ["From CSV", "Force Ellipsoid", "Force Cylinder"],
@@ -252,8 +252,8 @@ st.markdown(
     the corresponding dimensions for all rows. Rows missing required columns are skipped.
     """
 )
-
-file = st.file_uploader("Upload CSV", type=["csv","tsv","txt"])
+    
+    file = st.file_uploader("Upload CSV/TSV", type=["csv","tsv","txt"])
     if file:
         sep = "\t" if file.name.endswith(("tsv","txt")) else ","
         df = pd.read_csv(file, sep=sep)
@@ -317,4 +317,3 @@ st.markdown(
     </div>
     """,
     unsafe_allow_html=True
-)

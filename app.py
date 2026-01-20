@@ -1,5 +1,5 @@
 # ============================================================
-# Lobe Magnetic Field Estimator v3
+# Lobe Magnetic Field Estimator v3 (Jet Power Enabled)
 # Geometry toggle + input table added
 # ============================================================
 
@@ -138,8 +138,8 @@ def compute_fields_lobes(alpha, g1, g2, v0, s_v0, z, t_age, geometry,
 # ============================================================
 # Streamlit UI
 # ============================================================
-st.set_page_config("Lobe Magnetic Field Estimator v3", "🌌", layout="wide")
-st.title("🌀 Lobe Magnetic Field Estimator v3")
+st.set_page_config("Jet Power &Lobe Magnetic Field Estimator v3", "🌌", layout="wide")
+st.title("🌀 Jet Power & Lobe Magnetic Field Estimator v3")
 
 # Sidebar (LOCKED)
 with st.sidebar:

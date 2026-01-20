@@ -229,29 +229,29 @@ with tab_batch:
         ["From CSV", "Force Ellipsoid", "Force Cylinder"],
         horizontal=True
     )
-st.markdown(
-    """
-    Upload a CSV/TSV file describing **two-lobed radio sources**.
-
-    Each file must contain the **common columns**:  
-    `Source, alpha, gamma1, gamma2, v0, s_v0, z, t_age, geometry`  
-    where **v0** is in **MHz**, **s_v0** in **Jy**, **z** is redshift, **t_age** in **years**, 
-    and **geometry** specifies how the lobe dimensions are interpreted.
-
-    In addition to the common columns, **each row must include geometry-specific columns**:
-
-    • If `geometry = ellipsoid`, the row must also contain  
-    `l1, b1, h1, l2, b2, h2` (all angular dimensions in **arcsec**).
-
-    • If `geometry = cylinder`, the row must also contain  
-    `r1, h1, r2, h2` (radius and height in **arcsec**).
-
-    The geometry selector above controls how this column is used:  
-    *From CSV* reads geometry per row (mixed geometries allowed), while 
-    *Force Ellipsoid* or *Force Cylinder* ignores the CSV geometry column and requires 
-    the corresponding dimensions for all rows. Rows missing required columns are skipped.
-    """
-)
+    st.markdown(
+        """
+        Upload a CSV/TSV file describing **two-lobed radio sources**.
+    
+        Each file must contain the **common columns**:  
+        `Source, alpha, gamma1, gamma2, v0, s_v0, z, t_age, geometry`  
+        where **v0** is in **MHz**, **s_v0** in **Jy**, **z** is redshift, **t_age** in **years**, 
+        and **geometry** specifies how the lobe dimensions are interpreted.
+    
+        In addition to the common columns, **each row must include geometry-specific columns**:
+    
+        • If `geometry = ellipsoid`, the row must also contain  
+        `l1, b1, h1, l2, b2, h2` (all angular dimensions in **arcsec**).
+    
+        • If `geometry = cylinder`, the row must also contain  
+        `r1, h1, r2, h2` (radius and height in **arcsec**).
+    
+        The geometry selector above controls how this column is used:  
+        *From CSV* reads geometry per row (mixed geometries allowed), while 
+        *Force Ellipsoid* or *Force Cylinder* ignores the CSV geometry column and requires 
+        the corresponding dimensions for all rows. Rows missing required columns are skipped.
+        """
+    )
     
     file = st.file_uploader("Upload CSV/TSV", type=["csv","tsv","txt"])
     if file:

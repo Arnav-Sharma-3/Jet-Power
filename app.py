@@ -253,7 +253,7 @@ st.markdown(
     """
 )
 
-    file = st.file_uploader("Upload CSV", type=["csv","tsv","txt"])
+file = st.file_uploader("Upload CSV", type=["csv","tsv","txt"])
     if file:
         sep = "\t" if file.name.endswith(("tsv","txt")) else ","
         df = pd.read_csv(file, sep=sep)

@@ -276,3 +276,22 @@ with tab_batch:
             "magnetic_fields_results.csv",
             "text/csv"
         )
+st.markdown("---")
+st.markdown(
+    "📌 The cosmology calculator used for this project is based on [James Schombert's python version of the Ned Wright's Cosmology Calculator](https://www.astro.ucla.edu/~wright/CC.python).",
+    unsafe_allow_html=True
+)
+st.markdown(
+    "📖 Reference: Wright, E. L. (2006). A Cosmology Calculator for the World Wide Web. *Publications of the Astronomical Society of the Pacific*, 118(850), 1711–1715. [doi:10.1086/510102](https://doi.org/10.1086/510102)",
+    unsafe_allow_html=True
+)
+st.markdown(
+    """
+    <hr style="margin-top: 3rem; margin-bottom: 1rem;">
+    <div style='text-align: center; font-size: 0.9rem; color: gray;'>
+        Created by <b>Arnav Sharma</b><br>
+        Under the Guidance of <b>Dr. Chiranjib Konar</b>
+    </div>
+    """,
+    unsafe_allow_html=True
+)

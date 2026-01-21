@@ -1,0 +1,26 @@
+7/8/2025 changes to be made
+
+1) Slider to number input for omega_matter and omega_vac
+2) Decimal upto 5 to digits for omega_matter and omega_vac
+3) observed frequency nu_o and s_nu_o
+4) input for l,b,w is in arcsecond on webpage instructions
+5) output of length, breadth, depth and volume of lobe in kpc, kpc, kpc and kpc^3.
+6) toggle for single source mode and batch source mode
+7) to input the total length of the radio galaxies in arcsecond for both lobes seperately
+8) to get the output of the total length of source in kpc 
+9)* velocity of hotspot
+
+Topic for NTCC Seminar 2: (Future work) to convert magnetic fields and ages from one cosmology to other cosmology
+
+
+18/12/25 CHANGES  
+
+1) Numbering of equations
+2) Write which equation has been replaced where and make it a well documented write up
+3) lobes structure model should have two options, one is 1) cylinder mode, other is 2) ellipsoid mode
+4) source parameters to be displayed in the display interface
+5) in single source mode all the source parameters should be fed manually (alpha gamma1 gamma2 nu0 F_nu0 l b w z) 
+6) calculate U_total(min) and U_total(eq) from equation 100. 
+7) For the input file, there should be references at the end
+8) age of lobe from literature (later if time permits, to be derived by self)
+9) Estimation of velocity of hotspot by dividing the distance from core to hotspot by the age of the source

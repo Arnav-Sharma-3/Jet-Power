@@ -20,7 +20,7 @@ C_LIGHT = 2.99792458e10
 X_FACTOR = 0.0
 
 # --------------------------------------------------
-# Cosmology
+# Cosmology calculator
 # --------------------------------------------------
 def run_cosmology_calculator(z, H0, WM, WV):
     h = H0 / 100.0
@@ -120,7 +120,8 @@ def compute_fields_lobes(alpha, g1, g2, v0, s_v0, z, t_age, geometry,
     B_eq = (2/(1+alpha))**(1/(3+alpha))*B_min
 
     u_B = B_eq**2/(8*math.pi)
-    u_p = alpha*A*L*B_eq**(-1.5)/V_cm3
+    #u_p = alpha*A*L*B_eq**(-1.5)/V_cm3
+    u_p = A*B**(-1-alpha)
     u_tot = u_p + u_B
 
     U_eq = u_tot * V_cm3
@@ -151,7 +152,7 @@ with st.sidebar:
 tab_single, tab_batch = st.tabs(["🔹 Single Source", "📂 Batch (CSV Upload)"])
 
 # ============================================================
-# SINGLE SOURCE
+# A: SINGLE SOURCE (start)
 # ============================================================
 with tab_single:
     st.subheader("Single Source")
@@ -219,8 +220,13 @@ with tab_single:
         }
         st.dataframe(pd.DataFrame(out.items(), columns=["Quantity","Value"]))
 
+
 # ============================================================
-# BATCH MODE
+# A: SINGLE SOURCE (emd)
+# ============================================================
+
+# ============================================================
+# B: MULTI SOURCE (start)
 # ============================================================
 with tab_batch:
     st.subheader("Batch Geometry Mode")
@@ -299,6 +305,10 @@ with tab_batch:
             "magnetic_fields_results.csv",
             "text/csv"
         )
+# ============================================================
+# B: MULTI SOURCE (END)
+# ============================================================
+
 st.markdown("---")
 st.markdown(
     "📌 The cosmology calculator used for this project is based on [James Schombert's python version of the Ned Wright's Cosmology Calculator](https://www.astro.ucla.edu/~wright/CC.python).",

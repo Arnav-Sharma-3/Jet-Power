@@ -1,4 +1,4 @@
-7/8/2025 changes to be made
+7/8/2025 CHANGES
 
 1) Slider to number input for omega_matter and omega_vac
 2) Decimal upto 5 to digits for omega_matter and omega_vac
@@ -24,3 +24,12 @@ Topic for NTCC Seminar 2: (Future work) to convert magnetic fields and ages from
 7) For the input file, there should be references at the end
 8) age of lobe from literature (later if time permits, to be derived by self)
 9) Estimation of velocity of hotspot by dividing the distance from core to hotspot by the age of the source
+
+
+22/01/26 CHANGES
+
+1) Both lobes need to be modeled seperately with all parameters different for each lobe
+2) Modify code so it works for alpha = 1 and (alpha=0.5, p=2) using IF and then statement
+3) Increase decimal point limit upto 7 decimals. 
+4) handwritten calculations should be compared with all the intermediate variables and final output.
+5) Hardcopy of handwritten calculations to be produced to sir.

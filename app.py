@@ -121,7 +121,7 @@ def compute_fields_lobes(alpha, g1, g2, v0, s_v0, z, t_age, geometry,
 
     u_B = B_eq**2/(8*math.pi)
     #u_p = alpha*A*L*B_eq**(-1.5)/V_cm3
-    u_p = A*B**(-1-alpha)
+    u_p = A*(B**(-1-alpha))
     u_tot = u_p + u_B
 
     U_eq = u_tot * V_cm3
@@ -133,7 +133,7 @@ def compute_fields_lobes(alpha, g1, g2, v0, s_v0, z, t_age, geometry,
         length=length, breadth=breadth, width=width,
         V=V_kpc3, L=L,
         up=u_p, uB=u_B, utot=u_tot,
-        t_age=t_age, Pjet=P_jet_W
+        t_age=t_age, Pjet=P_jet_W, 
     )
 
 # ============================================================

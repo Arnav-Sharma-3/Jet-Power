@@ -29,7 +29,7 @@ Topic for NTCC Seminar 2: (Future work) to convert magnetic fields and ages from
 22/01/26 CHANGES
 
 1) Both lobes need to be modeled seperately with all parameters different for each lobe
-2) Modify code so it works for alpha = 1 and (alpha=0.5, p=2) using IF and then statement
+2) Modify code so it works for alpha = 1 and (alpha=0.5, p=2) AND p = 3  using IF and then statement
 3) Increase decimal point limit upto 7 decimals. 
 4) handwritten calculations should be compared with all the intermediate variables and final output.
 5) Hardcopy of handwritten calculations to be produced to sir.

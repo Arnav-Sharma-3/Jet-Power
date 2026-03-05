@@ -33,3 +33,10 @@ Topic for NTCC Seminar 2: (Future work) to convert magnetic fields and ages from
 3) Increase decimal point limit upto 7 decimals. 
 4) handwritten calculations should be compared with all the intermediate variables and final output.
 5) Hardcopy of handwritten calculations to be produced to sir.
+
+
+5/03/26 CHANGES
+
+1) diagnose the problem with u_p not matching u_b by verifying with hand written calculations.
+2) tidy up the equations with better constants and better formatting
+3) 3 if else statments for p=2, p=3 and p=/=2,3.

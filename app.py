@@ -124,7 +124,7 @@ def compute_fields_lobes(alpha, g1, g2, v0, s_v0, z, t_age, geometry,
     u_p = A*(B_eq**(-1-alpha))
     u_tot = u_p + u_B
 
-    U_eq = u_tot * V_cm3
+    U_eq = 2 * u_B * V_cm3
     P_jet_W = (U_eq / (t_age*3.15576e7)) * 1e-7
 
     return dict(

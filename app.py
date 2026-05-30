@@ -104,15 +104,12 @@ def compute_fields_lobes(alpha, g1, g2, v0, s_v0, z, t_age, geometry,
 
     p = 2*alpha + 1
     L1 = 4*math.pi*D_l_cm**2 * s_v0_cgs * v0_hz**alpha
-
-    T3 = (g2-1)**(2-p) - (g1-1)**(2-p)
-    T4 = (g2-1)**(2*(1-alpha)) - (g1-1)**(2*(1-alpha))
-    T5 = (g2-1)**(3-p) - (g1-1)**(3-p)
-    T6 = T3*T4/T5
-
-    T1 = 3*L1 / (2*C3*(M_E*C_LIGHT**2)**(2*alpha-1))
-    T2 = ((1+X_FACTOR)/(1-alpha))*((3-p)/(2-p))*(sqrt(2/3)*C1)**(1-alpha)
-    A = T1*T2*T6
+                             
+  
+    T1 = 3*L1 / (C3*(M_E*C_LIGHT**2)**(2*alpha-1))
+    T2 = ((1+X_FACTOR)*(sqrt(2/3)*C1)**(1-alpha)
+    T3 = ((g2-1)**(2*(1-alpha)) - (g1-1)**(2*(1-alpha)))/(2*(1-alpha))
+    A = T1*T2*T3
 
     L = L1/(1-alpha)*(sqrt(2/3)*C1*(M_E*C_LIGHT**2)**2)**(1-alpha)*T4
 
@@ -121,7 +118,7 @@ def compute_fields_lobes(alpha, g1, g2, v0, s_v0, z, t_age, geometry,
 
     u_B = B_eq**2/(8*math.pi)
     #u_p = alpha*A*L*B_eq**(-1.5)/V_cm3
-    u_p = A*(B_eq**(-1-alpha))
+    u_p = A*(B_eq**(-(1+alpha)))
     u_tot = u_p + u_B
 
     U_eq = 2 * u_B * V_cm3

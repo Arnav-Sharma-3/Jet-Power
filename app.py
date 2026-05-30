@@ -111,7 +111,7 @@ def compute_fields_lobes(alpha, g1, g2, v0, s_v0, z, t_age, geometry,
     T3 = ((g2-1)**(2*(1-alpha)) - (g1-1)**(2*(1-alpha)))/(2*(1-alpha))
     A = T1*T2*T3
 
-    L = L1/(1-alpha)*(sqrt(2/3)*C1*(M_E*C_LIGHT**2)**2)**(1-alpha)*T4
+    L = L1/(1-alpha)*(sqrt(2/3)*C1*(M_E*C_LIGHT**2)**2)**(1-alpha)*T3
 
     B_min = ((4*math.pi*(1+alpha)*A)/V_cm3)**(1/(3+alpha))
     B_eq = (2/(1+alpha))**(1/(3+alpha))*B_min

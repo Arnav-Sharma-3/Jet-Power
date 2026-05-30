@@ -107,7 +107,7 @@ def compute_fields_lobes(alpha, g1, g2, v0, s_v0, z, t_age, geometry,
                              
   
     T1 = 3*L1 / (C3*(M_E*C_LIGHT**2)**(2*alpha-1))
-    T2 = ((1+X_FACTOR)*(sqrt(2/3)*C1)**(1-alpha)
+    T2 = (1+X_FACTOR)*(sqrt(2/3)*C1)**(1-alpha)
     T3 = ((g2-1)**(2*(1-alpha)) - (g1-1)**(2*(1-alpha)))/(2*(1-alpha))
     A = T1*T2*T3
 

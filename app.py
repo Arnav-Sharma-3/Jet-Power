@@ -118,7 +118,7 @@ def compute_fields_lobes(alpha, g1, g2, v0, s_v0, z, t_age, geometry,
 
     u_B = B_eq**2/(8*math.pi)
     #u_p = alpha*A*L*B_eq**(-1.5)/V_cm3
-    u_p = A*(B_eq**(-(1+alpha)))
+    u_p = (A*(B_eq**(-(1+alpha))))/V_cm3
     u_tot = u_p + u_B
 
     U_eq = 2 * u_B * V_cm3

@@ -155,12 +155,12 @@ with tab_single:
 
     geometry = st.selectbox("Geometry", ["ellipsoid", "cylinder"])
     source = st.text_input("Source")
-    alpha = st.number_input("α", value=0.7)
+    alpha = st.number_input("α", value=0.7, format="%.5f")
     g1 = st.number_input("γ₁", value=10.0)
     g2 = st.number_input("γ₂", value=1e5)
     v0 = st.number_input("ν₀ (MHz)", value=1400.0)
     s_v0 = st.number_input("S₀ (Jy)", value=1.0)
-    z = st.number_input("Redshift (z)", value=0.1000)
+    z = st.number_input("Redshift (z)", value=0.1000, format="%.5f")
     t_age = st.number_input("t_age (years)", value=1e7, format="%.3e")
 
     if geometry == "ellipsoid":

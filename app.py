@@ -2,11 +2,10 @@
 # Lobe Magnetic Field Estimator v3 (Jet Power Enabled)
 # Geometry toggle + input table added
 # ============================================================
-
 import streamlit as st
 import pandas as pd
 import math
-from math import sqrt, exp, sin, ln
+from math import sqrt, exp, sin, log
 
 # --------------------------------------------------
 # Constants (CGS)
@@ -110,7 +109,7 @@ def compute_fields_lobes(alpha, g1, g2, v0, s_v0, z, t_age, geometry,
     T2 = (1+X_FACTOR)*(sqrt(2/3)*C1)**(1-alpha)
 
     if alpha == 0:
-        T3=math.ln((g2-1)/(g1-1))
+        T3=math.log((g2-1)/(g1-1))
     else:
         T3 = ((g2-1)**(1-(2*alpha)) - (g1-1)**(1-(2*alpha)))/(1-(2*alpha))
 
@@ -164,9 +163,9 @@ with tab_single:
     alpha = st.number_input("α", value=0.7, format="%.3f")
     g1 = st.number_input("γ₁", value=10.0)
     g2 = st.number_input("γ₂", value=1e5)
-    v0 = st.number_input("ν₀ (MHz)", value=1400.0)
-    s_v0 = st.number_input("S₀ (Jy)", value=1.0)
-    z = st.number_input("Redshift (z)", value=0.1000, format="%.3f")
+    v0 = st.number_input("ν₀ (MHz)", value=25.0)
+    s_v0 = st.number_input("S₀ (Jy)", value=2300.0)
+    z = st.number_input("Redshift (z)", value=0.1550, format="%.3f")
     t_age = st.number_input("t_age (years)", value=1e7, format="%.3e")
 
     if geometry == "ellipsoid":

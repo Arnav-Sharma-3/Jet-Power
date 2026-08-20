@@ -169,12 +169,12 @@ with tab_single:
     t_age = st.number_input("t_age (years)", value=1e7, format="%.3e")
 
     if geometry == "ellipsoid":
-        l1 = st.number_input("l1 (arcsec)")
-        b1 = st.number_input("b1 (arcsec)")
-        h1 = st.number_input("h1 (arcsec)")
-        l2 = st.number_input("l2 (arcsec)")
-        b2 = st.number_input("b2 (arcsec)")
-        h2 = st.number_input("h2 (arcsec)")
+        l1 = st.number_input("l1 (arcsec)", value=231.65)
+        b1 = st.number_input("b1 (arcsec)", value=108.28)
+        h1 = st.number_input("h1 (arcsec)", value=108.28)
+        l2 = st.number_input("l2 (arcsec)", value=231.65)
+        b2 = st.number_input("b2 (arcsec)", value=108.28)
+        h2 = st.number_input("h2 (arcsec)", value=108.28)
         r1 = r2 = None
     else:
         r1 = st.number_input("r1 (arcsec)")

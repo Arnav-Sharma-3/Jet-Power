@@ -160,7 +160,7 @@ with tab_single:
     g2 = st.number_input("γ₂", value=1e5)
     v0 = st.number_input("ν₀ (MHz)", value=1400.0)
     s_v0 = st.number_input("S₀ (Jy)", value=1.0)
-    z = st.number_input("Redshift (z)", value=0.1)
+    z = st.number_input("Redshift (z)", value=0.1000)
     t_age = st.number_input("t_age (years)", value=1e7, format="%.3e")
 
     if geometry == "ellipsoid":

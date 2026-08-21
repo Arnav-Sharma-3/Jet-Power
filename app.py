@@ -5,6 +5,7 @@
 import streamlit as st
 import pandas as pd
 import math
+import re
 from math import sqrt, exp, sin, log
 
 # --------------------------------------------------
@@ -136,7 +137,126 @@ def compute_fields_lobes(alpha, g1, g2, v0, s_v0, z, t_age, geometry,
         up=u_p, uB=u_B, utot=u_tot,
         t_age=t_age, Pjet=P_jet_W, 
     )
+# --------------------------------------------------
+# Single-line input parser
+# --------------------------------------------------
+def parse_single_line(line):
+    """
+    Parse a single radio-source input line.
 
+    Accepted separators:
+        spaces
+        commas
+        tabs
+
+    Ellipsoid format:
+        Source alpha gamma1 gamma2 v0 s_v0 z t_age geometry
+        l1 b1 h1 l2 b2 h2
+
+    Cylinder format:
+        Source alpha gamma1 gamma2 v0 s_v0 z t_age geometry
+        r1 h1 r2 h2
+    """
+
+    # Remove leading/trailing whitespace
+    line = line.strip()
+
+    if not line:
+        raise ValueError("No input was provided.")
+
+    # Split on one or more commas, spaces, or tabs
+    values = re.split(r"[,\s]+", line)
+
+    if len(values) < 9:
+        raise ValueError(
+            "Not enough values. Please check the required input format."
+        )
+
+    # Common parameters
+    source = values[0]
+    alpha = float(values[1])
+    g1 = float(values[2])
+    g2 = float(values[3])
+    v0 = float(values[4])
+    s_v0 = float(values[5])
+    z = float(values[6])
+    t_age = float(values[7])
+
+    geometry = values[8].lower()
+
+    # ----------------------------------------------
+    # Ellipsoid
+    # ----------------------------------------------
+    if geometry == "ellipsoid":
+
+        if len(values) != 15:
+            raise ValueError(
+                "Ellipsoid format requires 15 values:\n"
+                "Source alpha gamma1 gamma2 v0 s_v0 z t_age "
+                "ellipsoid l1 b1 h1 l2 b2 h2"
+            )
+
+        l1 = float(values[9])
+        b1 = float(values[10])
+        h1 = float(values[11])
+
+        l2 = float(values[12])
+        b2 = float(values[13])
+        h2 = float(values[14])
+
+        r1 = None
+        r2 = None
+
+    # ----------------------------------------------
+    # Cylinder
+    # ----------------------------------------------
+    elif geometry == "cylinder":
+
+        if len(values) != 13:
+            raise ValueError(
+                "Cylinder format requires 13 values:\n"
+                "Source alpha gamma1 gamma2 v0 s_v0 z t_age "
+                "cylinder r1 h1 r2 h2"
+            )
+
+        r1 = float(values[9])
+        h1 = float(values[10])
+
+        r2 = float(values[11])
+        h2 = float(values[12])
+
+        l1 = None
+        b1 = None
+        l2 = None
+        b2 = None
+
+    else:
+        raise ValueError(
+            "Geometry must be either 'ellipsoid' or 'cylinder'."
+        )
+
+    return {
+        "source": source,
+        "alpha": alpha,
+        "g1": g1,
+        "g2": g2,
+        "v0": v0,
+        "s_v0": s_v0,
+        "z": z,
+        "t_age": t_age,
+        "geometry": geometry,
+
+        "l1": l1,
+        "b1": b1,
+        "h1": h1,
+
+        "l2": l2,
+        "b2": b2,
+        "h2": h2,
+
+        "r1": r1,
+        "r2": r2
+    }
 # ============================================================
 # Streamlit UI
 # ============================================================
@@ -156,51 +276,263 @@ tab_single, tab_batch = st.tabs(["🔹 Single Source", "📂 Batch (CSV Upload)"
 # A: SINGLE SOURCE (start)
 # ============================================================
 with tab_single:
+
     st.subheader("Single Source")
 
-    geometry = st.selectbox("Geometry", ["ellipsoid", "cylinder"])
-    source = st.text_input("Source")
-    alpha = st.number_input("α", value=0.7, format="%.3f")
-    g1 = st.number_input("γ₁", value=10.0)
-    g2 = st.number_input("γ₂", value=1e5)
-    v0 = st.number_input("ν₀ (MHz)", value=25.0)
-    s_v0 = st.number_input("S₀ (Jy)", value=2300.0)
-    z = st.number_input("Redshift (z)", value=0.1550, format="%.3f")
-    t_age = st.number_input("t_age (years)", value=1e7, format="%.3e")
+    # --------------------------------------------------
+    # Input mode toggle
+    # --------------------------------------------------
+    input_mode = st.radio(
+        "Input mode:",
+        ["Individual Inputs", "Paste Single Line"],
+        horizontal=True
+    )
 
-    if geometry == "ellipsoid":
-        l1 = st.number_input("l1 (arcsec)", value=231.65)
-        b1 = st.number_input("b1 (arcsec)", value=108.28)
-        h1 = st.number_input("h1 (arcsec)", value=108.28)
-        l2 = st.number_input("l2 (arcsec)", value=231.65)
-        b2 = st.number_input("b2 (arcsec)", value=108.28)
-        h2 = st.number_input("h2 (arcsec)", value=108.28)
-        r1 = r2 = None
+    # ==================================================
+    # MODE 1: INDIVIDUAL INPUTS
+    # ==================================================
+    if input_mode == "Individual Inputs":
+
+        geometry = st.selectbox(
+            "Geometry",
+            ["ellipsoid", "cylinder"]
+        )
+
+        source = st.text_input("Source")
+
+        alpha = st.number_input(
+            "α",
+            value=0.7,
+            format="%.3f"
+        )
+
+        g1 = st.number_input(
+            "γ₁",
+            value=10.0
+        )
+
+        g2 = st.number_input(
+            "γ₂",
+            value=1e5
+        )
+
+        v0 = st.number_input(
+            "ν₀ (MHz)",
+            value=25.0
+        )
+
+        s_v0 = st.number_input(
+            "S₀ (Jy)",
+            value=2300.0
+        )
+
+        z = st.number_input(
+            "Redshift (z)",
+            value=0.1550,
+            format="%.3f"
+        )
+
+        t_age = st.number_input(
+            "t_age (years)",
+            value=1e7,
+            format="%.3e"
+        )
+
+        # ----------------------------------------------
+        # Geometry inputs
+        # ----------------------------------------------
+        if geometry == "ellipsoid":
+
+            l1 = st.number_input(
+                "l1 (arcsec)",
+                value=231.65
+            )
+
+            b1 = st.number_input(
+                "b1 (arcsec)",
+                value=108.28
+            )
+
+            h1 = st.number_input(
+                "h1 (arcsec)",
+                value=108.28
+            )
+
+            l2 = st.number_input(
+                "l2 (arcsec)",
+                value=231.65
+            )
+
+            b2 = st.number_input(
+                "b2 (arcsec)",
+                value=108.28
+            )
+
+            h2 = st.number_input(
+                "h2 (arcsec)",
+                value=108.28
+            )
+
+            r1 = None
+            r2 = None
+
+        else:
+
+            r1 = st.number_input(
+                "r1 (arcsec)",
+                value=50.0
+            )
+
+            h1 = st.number_input(
+                "h1 (arcsec)",
+                value=100.0
+            )
+
+            r2 = st.number_input(
+                "r2 (arcsec)",
+                value=50.0
+            )
+
+            h2 = st.number_input(
+                "h2 (arcsec)",
+                value=100.0
+            )
+
+            l1 = None
+            b1 = None
+            l2 = None
+            b2 = None
+
+        # ----------------------------------------------
+        # Compute
+        # ----------------------------------------------
+        if st.button("Compute", key="compute_individual"):
+
+            res = compute_fields_lobes(
+                alpha, g1, g2, v0, s_v0,
+                z, t_age, geometry,
+                H0, WM, WV,
+                l1, b1, h1,
+                l2, b2, h2,
+                r1, r2
+            )
+
+            input_source = source
+
+    # ==================================================
+    # MODE 2: PASTE SINGLE LINE
+    # ==================================================
     else:
-        r1 = st.number_input("r1 (arcsec)")
-        h1 = st.number_input("h1 (arcsec)")
-        r2 = st.number_input("r2 (arcsec)")
-        h2 = st.number_input("h2 (arcsec)")
-        l1 = b1 = l2 = b2 = None
 
-    if st.button("Compute"):
-        res = compute_fields_lobes(alpha, g1, g2, v0, s_v0, z, t_age, geometry,
-                                   H0, WM, WV,
-                                   l1, b1, h1, l2, b2, h2, r1, r2)
+        st.markdown(
+            """
+            Paste one row containing the source parameters.
 
-        # -------- Input table --------
+            **Ellipsoid:**
+
+            `Source alpha gamma1 gamma2 v0 s_v0 z t_age ellipsoid l1 b1 h1 l2 b2 h2`
+
+            **Cylinder:**
+
+            `Source alpha gamma1 gamma2 v0 s_v0 z t_age cylinder r1 h1 r2 h2`
+
+            Separators can be **spaces, commas, or tabs**.
+            """
+        )
+
+        pasted_line = st.text_area(
+            "Paste single source",
+            height=100,
+            placeholder=(
+                "HerA 0.7 10 100000 25 2300 0.155 "
+                "1e7 ellipsoid 231.65 108.28 108.28 "
+                "231.65 108.28 108.28"
+            )
+        )
+
+        if st.button(
+            "Compute single source",
+            key="compute_pasted"
+        ):
+
+            try:
+
+                data = parse_single_line(pasted_line)
+
+                source = data["source"]
+                alpha = data["alpha"]
+                g1 = data["g1"]
+                g2 = data["g2"]
+                v0 = data["v0"]
+                s_v0 = data["s_v0"]
+                z = data["z"]
+                t_age = data["t_age"]
+                geometry = data["geometry"]
+
+                l1 = data["l1"]
+                b1 = data["b1"]
+                h1 = data["h1"]
+
+                l2 = data["l2"]
+                b2 = data["b2"]
+                h2 = data["h2"]
+
+                r1 = data["r1"]
+                r2 = data["r2"]
+
+                res = compute_fields_lobes(
+                    alpha, g1, g2, v0, s_v0,
+                    z, t_age, geometry,
+                    H0, WM, WV,
+                    l1, b1, h1,
+                    l2, b2, h2,
+                    r1, r2
+                )
+
+                input_source = source
+
+            except Exception as e:
+
+                st.error(f"Input error: {e}")
+                res = None
+
+    # ==================================================
+    # DISPLAY RESULTS
+    # ==================================================
+
+    if "res" in locals() and res is not None:
+
+        # ----------------------------------------------
+        # Input table
+        # ----------------------------------------------
         st.markdown("### 🔢 Input Parameters")
-        inp = {
-            "Source": source, "Geometry": geometry, "α": alpha,
-            "γ₁": g1, "γ₂": g2, "ν₀ (MHz)": v0,
-            "S₀ (Jy)": s_v0, "z": z, "t_age (yr)": t_age
-        }
-        st.dataframe(pd.DataFrame(inp.items(), columns=["Parameter","Value"]))
 
-        # -------- Output table --------
+        inp = {
+            "Source": input_source,
+            "Geometry": geometry,
+            "α": alpha,
+            "γ₁": g1,
+            "γ₂": g2,
+            "ν₀ (MHz)": v0,
+            "S₀ (Jy)": s_v0,
+            "z": z,
+            "t_age (yr)": t_age
+        }
+
+        st.dataframe(
+            pd.DataFrame(
+                inp.items(),
+                columns=["Parameter", "Value"]
+            )
+        )
+
+        # ----------------------------------------------
+        # Output table
+        # ----------------------------------------------
         st.markdown("### 📊 Output Quantities")
+
         out = {
-            "Source": source,
+            "Source": input_source,
             "Redshift (z)": z,
             "Spectral Index (α)": res["alpha"],
             "B_min (μG)": res["Bmin"],
@@ -219,9 +551,13 @@ with tab_single:
             "t_age (years)": res["t_age"],
             "Jet power (W)": f"{res['Pjet']:.8e}",
         }
-        st.dataframe(pd.DataFrame(out.items(), columns=["Quantity","Value"]))
 
-
+        st.dataframe(
+            pd.DataFrame(
+                out.items(),
+                columns=["Quantity", "Value"]
+            )
+        )
 # ============================================================
 # A: SINGLE SOURCE (emd)
 # ============================================================

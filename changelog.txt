@@ -40,3 +40,7 @@ Topic for NTCC Seminar 2: (Future work) to convert magnetic fields and ages from
 1) diagnose the problem with u_p not matching u_b by verifying with hand written calculations.
 2) tidy up the equations with better constants and better formatting
 3) 3 if else statments for p=2, p=3 and p=/=2,3.
+
+
+23/08/26 CHANGES
+1) single inputs for lobes

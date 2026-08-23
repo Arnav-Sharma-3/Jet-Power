@@ -117,11 +117,18 @@ def compute_fields_lobes(alpha, g1, g2, v0, s_v0, z, t_age, geometry,
                              
     A = T1*T2*T3
 
-    L = L1/(1-alpha)*(sqrt(2/3)*C1*(M_E*C_LIGHT**2)**2)**(1-alpha)*T3
+    #L = L1/(1-alpha)*(sqrt(2/3)*C1*(M_E*C_LIGHT**2)**2)**(1-alpha)*T3
 
     B_min = ((4*math.pi*(1+alpha)*A)/V_cm3)**(1/(3+alpha))
     B_eq = (2/(1+alpha))**(1/(3+alpha))*B_min
 
+    L0 = L1*(sqrt(2/3)*C1*B_eq*(M_E*C_LIGHT**2)**2)**(1-alpha)
+
+    if alpha == 1:
+        L=math.log((g2-1)/(g1-1))
+    else:
+        L = 2*L0*(((g2-1)**(2*(1-alpha)) - (g1-1)**(2*(1-alpha)))/(2*(1-alpha)))
+                             
     u_B = B_eq**2/(8*math.pi)
     u_p = (A*(B_eq**(-(1+alpha))))/V_cm3
     u_tot = u_p + u_B

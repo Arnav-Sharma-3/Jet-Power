@@ -110,7 +110,7 @@ def compute_fields_lobes(alpha, g1, g2, v0, s_v0, z, t_age, geometry,
     T2 = (1+X_FACTOR)*(sqrt(2/3)*C1)**(1-alpha)
 
     if alpha == 0.5:
-        T3=math.log((g2-1)/(g1-1))
+        T3 = math.log((g2-1)/(g1-1))
     else:
         T3 = ((g2-1)**(1-(2*alpha)) - (g1-1)**(1-(2*alpha)))/(1-(2*alpha))
 
@@ -125,7 +125,7 @@ def compute_fields_lobes(alpha, g1, g2, v0, s_v0, z, t_age, geometry,
     L0 = L1*(sqrt(2/3)*C1*B_eq*(M_E*C_LIGHT**2)**2)**(1-alpha)
 
     if alpha == 1:
-        L=math.log((g2-1)/(g1-1))
+        L = 2*L0*math.log((g2-1)/(g1-1))
     else:
         L = 2*L0*(((g2-1)**(2*(1-alpha)) - (g1-1)**(2*(1-alpha)))/(2*(1-alpha)))
                              

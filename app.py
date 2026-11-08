@@ -143,7 +143,7 @@ def parse_single_line(line):
     line = line.strip()
     if not line:
         raise ValueError("No input was provided.")
-    values = re.split(r"[,\\s]+", line)
+    values = re.split(r"[,\s]+", line)
     if len(values) < 9:
         raise ValueError("Not enough values. Please check the required input format.")
 
